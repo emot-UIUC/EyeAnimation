@@ -29,8 +29,6 @@ int i;
 void setup() {
   
   fullScreen();  
-  smooth();
-  noStroke();
   
   mic = new KetaiAudioInput(this);
  
@@ -48,13 +46,7 @@ void setup() {
 
 void draw() {
   background(#FFE708); 
-  
-     
-
- 
- 
-    
- noStroke();
+  noStroke();
   eL.display();    // ellipse(width/4*1.1f, 200, 250,250);
   eR.display();   // ellipse(width/4*3, 200, 250,250);
  
@@ -68,9 +60,11 @@ void draw() {
  }
  */
  
- if(i>3){
-  angry();
-  i=0;
+ if(i>3 && i<300){
+   angry();
+   i++;
+ } else if (i>300){
+  i=0; 
  }
 
  blob.display();
@@ -79,7 +73,7 @@ void draw() {
 }
 
  
- void mousePressed(){
+void mousePressed(){
   if(mic.isActive())
     mic.stop();
   else
@@ -93,7 +87,7 @@ void onAudioEvent(short[] _data)
 }
 
 public void pupil(float pupilx, float pupily){
-  int i=0xff1585E5; //pupil color
+   int i=0xff1585E5; //pupil color
   
    nax= map(ax*10,-25,25,pupilx-eL.diameter/2, pupilx+eL.diameter/2);
    nay= map(ay*10,110,-1,pupily-eL.diameter/2,pupily+eL.diameter/2);
@@ -101,6 +95,7 @@ public void pupil(float pupilx, float pupily){
    x1=lerp(pupilx,nax,0.2);
    y1=lerp(pupily,nay,0.2);
    
+   noStroke();
    fill(i);
    ellipse(x1, y1, 150,170);
    fill(0xff52B0FF);
@@ -128,9 +123,10 @@ public void eyelid(){
 
 public void angry() {
   
- fill(#FFA40F);
- arc(width/4*1.1f, 200, 200, 200,  -PI+QUARTER_PI,0, CHORD);
- arc(width/4*3, 200, 200, 200, PI+QUARTER_PI,0,CHORD);
+ fill(0xffF7E111);
+ noStroke();
+ arc(width/4*1.1f, 210, 300, 300,  -PI+QUARTER_PI,0, CHORD);
+ arc(width/4*3, 210, 300, 300, -PI,-QUARTER_PI, CHORD);
   
 }
 

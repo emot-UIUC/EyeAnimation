@@ -8,8 +8,8 @@ class Eyeball{
   
 Eyeball(float tempD){
    x=tempD;
-   y=200;
-   diameter=250;
+   y=200; // Y-location of Eyeballs
+   diameter=250; 
    
    xmin=width/4*1.1f-diameter/2;
    xmax=width/4*1.1f+diameter/2;
