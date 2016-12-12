@@ -1,3 +1,7 @@
+import ketai.sensors.*;
+
+KetaiAudioInput mic;
+short[] data;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -27,6 +31,8 @@ void setup() {
   fullScreen();  
   smooth();
   noStroke();
+  
+  mic = new KetaiAudioInput(this);
  
   context = getActivity();
   manager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
@@ -36,18 +42,24 @@ void setup() {
 
   eL= new Eyeball(width/4*1.1f);
   eR= new Eyeball(width/4*3);
-  blob = new Blob(150);
+  blob = new Blob(120);
   //textFont(createFont("Arial", 60));
 }
 
 void draw() {
-   background(0xffF7E111); 
+  background(#FFE708); 
+  
+     
+
  
+ 
+    
+ noStroke();
   eL.display();    // ellipse(width/4*1.1f, 200, 250,250);
   eR.display();   // ellipse(width/4*3, 200, 250,250);
  
-  pupil(width/4*1.1f,200);     //Left
-  pupil(width/4*3, 200);  //Right
+  pupil(width/4*1.1f-5,200);     //Left
+  pupil(width/4*3-5, 200);  //Right
 
  
  //eyelid
@@ -68,9 +80,18 @@ void draw() {
 
  
  void mousePressed(){
+  if(mic.isActive())
+    mic.stop();
+  else
+    mic.start();
   i++;  
  }
  
+void onAudioEvent(short[] _data)
+{
+  data= _data;
+}
+
 public void pupil(float pupilx, float pupily){
   int i=0xff1585E5; //pupil color
   
