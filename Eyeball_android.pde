@@ -1,5 +1,3 @@
-import io.inventit.processing.android.serial.*;
-
 import ketai.sensors.*;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -7,10 +5,6 @@ import android.hardware.SensorManager;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
-Serial myPort;
-int current;
-float inByte;
- 
 KetaiAudioInput mic;
 short[] data;
 
@@ -38,9 +32,7 @@ void setup() {
   fullScreen();  
   
   mic = new KetaiAudioInput(this);
-  
-  String portName = Serial.list(this)[0];
-  myPort = new Serial(this, portName, 9600);
+ 
  
   context = getActivity();
   manager = (SensorManager)context.getSystemService(Context.SENSOR_SERVICE);
@@ -63,13 +55,6 @@ void draw() {
   pupil(width/4*1.1f-5,200);     //Left
   pupil(width/4*3-5, 200);  //Right
 
-  String intString = myPort.readStringUntil('\n');
-  
-  if(intString != null){
-    intString = trim(intString);
-    inByte = float(intString);
-    current = int(map(inByte, Pmin, Pmax, 0, height));
-  }
  //eyelid
  /*if(random(100)<2) {
   eyelid();
